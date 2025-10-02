@@ -1,4 +1,6 @@
 .cluade/
 .vscode/
 .idea/
+target/
 
+Cargo.lock
