@@ -71,4 +71,4 @@ fn explain_option(value: Option<i32>) -> &'static str {
 ---
 
 ### 오늘의 TIL (Today I Learned)
-- (학습자가 자유롭게 작성할 공간)
+- match, Option, Result 활용 방법에 대해서 배움
