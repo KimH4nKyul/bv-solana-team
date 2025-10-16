@@ -31,7 +31,6 @@
         - `pub fee_micro_lamports: u64`
         - `pub compute_units: u32`
         - `pub class: TxClass`
-    - 구조체 위에도 어린이도 이해할 수 있는 짧은 주석을 남겨 주세요.
 
 3. **에러 타입과 스케줄러 구조 (`src/lib.rs`)**
     - `#[derive(Debug, thiserror::Error)]`를 이용해 `SchedulerError` 열거형을 정의하고 아래 변형을 추가합니다.
