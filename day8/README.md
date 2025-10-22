@@ -73,6 +73,7 @@
             - 실행이 끝난 트랜잭션을 가정하고, 해당 ID에 해당하는 계정 잠금과 컴퓨트 사용량을 해제합니다.
             - 대기열에서도 동일한 ID의 항목이 있으면 제거합니다.
             - ID가 없을 경우 조용히 아무 일도 일어나지 않도록 처리합니다.
+            - 여기서 `tx_id`는 `TransactionMeta.id` 값과 일치해야 합니다.
 
 5. **도우미 함수 작성 (`src/lib.rs`)**
     - `fn check_account_conflicts(state: &SlotExecutionState, tx: &TransactionMeta) -> Option<String>` 함수를 추가합니다.
@@ -88,7 +89,7 @@
     - `try_enqueue` 내부에서 도우미 함수를 활용해 다음 순서대로 처리하세요.
         1. `would_exceed_compute`가 `true`면 `AccountLockError::ComputeLimitExceeded`를 반환합니다. `requested`에는 현재 소비량과 요청량의 합계를, `limit`에는 제한을 넣으세요.
         2. `check_account_conflicts`가 `Some(account)`를 돌려주면 `AccountLockError::Conflict { account }`를 반환합니다.
-        3. 둘 다 문제가 없으면, `state`의 집합과 `consumed_compute_units`를 업데이트하고, `pending` 큐에 트랜잭션을 push합니다.
+        3. 둘 다 문제가 없으면, `locked_writable`과 `locked_readonly`에 각각 `tx.writable_accounts`와 `tx.readonly_accounts`의 항목을 넣고 `consumed_compute_units`에는 현재 값에 `tx.compute_units`를 더한 합계를 저장한 뒤, `pending` 큐에 트랜잭션을 push합니다.
     - `release`에서는 잠금 해제 시 HashSet에서 계정을 제거하고, `consumed_compute_units`를 `saturating_sub`로 줄이세요.
 
 7. **테스트 작성 (`tests/lock_queue.rs`)**
