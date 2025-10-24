@@ -18,13 +18,13 @@
 
 ## 프로젝트 생성과 기본 구조
 ```bash
-cargo new day9_reth_header_buffer --lib
-cd day9_reth_header_buffer
+cargo new reth_header_buffer --lib
+cd reth_header_buffer
 ```
 
 생성 직후 디렉터리 구조는 다음과 같습니다.
 ```
-day9_reth_header_buffer
+reth_header_buffer
 ├── Cargo.toml
 ├── src
 │   └── lib.rs
